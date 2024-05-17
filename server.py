@@ -1,6 +1,6 @@
 from datetime import datetime
 from pprint import pprint
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 
@@ -81,6 +81,35 @@ def post(id_num):
 
     return render_template("post.html", post=post_data, current_date=today_date)
     # Rendering the post.html template with the post data and current date
+
+
+
+@app.route("/read-form", methods=['POST'])
+def read_contact_form():
+    
+ # If method is POST, get the data entered by user
+    if request.method == 'POST':
+        
+        # Get the form data as Python ImmutableDict datatype  
+        data = request.form 
+    
+        ## Return the extracted information  
+        data_user= { 
+            'user_name'     : data['name'], 
+            'email' : data['email'], 
+            'phone_number'    : data['phone'], 
+            'msg'      : data['message'] , 
+        } 
+                    
+        pprint(data_user)    
+        
+        return render_template("thanks.html")   
+    # If the method is GET, or the credentials were invalid, render the HTML contact page to the user
+    else:
+        return render_template("contact.html")
+    
+   
+
 
 if __name__ == '__main__':
     app.run(debug=True)
