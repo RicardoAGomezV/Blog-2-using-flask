@@ -41,12 +41,12 @@ def home():
     return render_template("index.html", data=my_data, date=current_date())
 
 
-@app.route("/contact")
-# Defining the route for the contact page
-def contact():
+# @app.route("/contact")
+# # Defining the route for the contact page
+# def contact():
     
-    # Rendering the contact.html template
-    return render_template("contact.html")
+#     # Rendering the contact.html template
+#     return render_template("contact.html")
 
 
 # Defining the route for the about page
@@ -84,7 +84,7 @@ def post(id_num):
 
 
 
-@app.route("/read-form", methods=['POST'])
+@app.route("/contact", methods=['POST', 'GET'])
 def read_contact_form():
     
  # If method is POST, get the data entered by user
@@ -100,10 +100,12 @@ def read_contact_form():
             'phone_number'    : data['phone'], 
             'msg'      : data['message'] , 
         } 
-                    
+        
+        sent=True  
+                  
         pprint(data_user)    
         
-        return render_template("thanks.html")   
+        return render_template("contact.html", sent_form=sent)   
     # If the method is GET, or the credentials were invalid, render the HTML contact page to the user
     else:
         return render_template("contact.html")

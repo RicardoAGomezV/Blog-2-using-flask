@@ -22,7 +22,11 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>¿Quieres ponerte en contacto? ¡Rellena el formulario a continuación para enviarme un mensaje y te responderé lo antes posible!</p>
+                        {% if sent_form==True %}
+                            <p>Mensaje Enviado Correctamente</p>
+                        {% else %}
+                            <p>¿Quieres ponerte en contacto? ¡Rellena el formulario a continuación para enviarme un mensaje y te responderé lo antes posible!</p>
+                        {% endif %}
                         <div class="my-5">
                             <!-- * * * * * * * * * * * * * * *-->
                             <!-- * * SB Forms Contact Form * *-->
