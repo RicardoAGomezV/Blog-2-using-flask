@@ -1,8 +1,11 @@
 from datetime import datetime
+from email.message import EmailMessage
 from pprint import pprint
 from flask import Flask, render_template, request
 import requests
+import smtplib
 
+from parameters import MY_EMAIL, MY_PASSWORD
 
 # Initializing the Flask application
 app = Flask(__name__)
@@ -83,17 +86,18 @@ def post(id_num):
     # Rendering the post.html template with the post data and current date
 
 
-
+# Define a route for the contact form, allowing both GET and POST methods
 @app.route("/contact", methods=['POST', 'GET'])
 def read_contact_form():
     
- # If method is POST, get the data entered by user
+    # If the request method is POST, it means the user has submitted the form
     if request.method == 'POST':
         
-        # Get the form data as Python ImmutableDict datatype  
+        # Get the form data. The request.form object is an ImmutableMultiDict 
+        # that you can use to access the submitted form data.
         data = request.form 
     
-        ## Return the extracted information  
+        # Extract the individual form fields into a dictionary
         data_user= { 
             'user_name'     : data['name'], 
             'email' : data['email'], 
@@ -101,15 +105,44 @@ def read_contact_form():
             'msg'      : data['message'] , 
         } 
         
+        # Set a flag to indicate that the form has been sent
         sent=True  
                   
+        # Print the user data to the console for debugging purposes
         pprint(data_user)    
         
+        # creates SMTP session
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+
+        # start TLS for security
+        s.starttls()
+
+        # Authentication
+        s.login(MY_EMAIL, MY_PASSWORD)
+
+        # create an instance of EmailMessage class. 
+        msg = EmailMessage()
+        msg['Subject'] = 'User from your blog sent you a message'
+        msg['From'] = MY_EMAIL
+        msg['To'] = MY_EMAIL
+        content=f"Name: {data_user['user_name']}\nEmail: {data_user['email']}\nPhone: {data_user['phone_number']}\nMessage:{data_user['msg']}"
+        msg.set_content(content)
+
+        # sending the mail
+        s.send_message(msg)
+
+        # terminating the session
+        s.quit()        
+        
+        # Render the contact form template and pass the 'sent' flag to it
         return render_template("contact.html", sent_form=sent)   
-    # If the method is GET, or the credentials were invalid, render the HTML contact page to the user
-    else:
-        return render_template("contact.html")
     
+    # If the request method is GET, it means the user is loading the form page
+    else:
+        
+        # Render the contact form template
+        return render_template("contact.html")
+
    
 
 
