@@ -31,7 +31,10 @@ This project is a simple blog application built using Flask, a lightweight web f
 - Development of a contact form that sends messages via email.
 
 ![img1](https://github.com/bardack134/Blog-2-using-flask/assets/142977989/0c879826-b2c6-4168-b726-c9cbc40c0b7e)
+#
 ![img2](https://github.com/bardack134/Blog-2-using-flask/assets/142977989/0e601a3c-1228-4ddc-9085-e3663036a092)
+#
 ![img3](https://github.com/bardack134/Blog-2-using-flask/assets/142977989/374ad4ff-fe78-4548-88c6-108338fc1a8c)
+#
 ![スクリーンショット 2024-05-17 122523](https://github.com/bardack134/Blog-2-using-flask/assets/142977989/3b558474-23bc-475b-9122-3bd7e02702c5)
 
